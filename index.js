@@ -23,10 +23,10 @@ function nanotick () {
       }
 
       if (isAsync) {
-        cb.apply(cb, arguments)
+        cb.apply(cb, args)
       } else {
         executeAsync(function () {
-          cb.apply(cb, arguments)
+          cb.apply(cb, args)
         })
       }
     }
