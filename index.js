@@ -2,7 +2,14 @@ var assert = require('assert')
 
 module.exports = nanotick
 
-// Process.nextTick() batching ulity
+// A helper for delaying the execution of a function.
+// (any... -> any) -> void
+var delayed =
+  typeof setImmediate !== 'undefined' ? setImmediate
+  : typeof process !== 'undefined' ? process.nextTick
+  : /* otherwise */ setTimeout
+
+// delayed function batching ulity
 // null -> fn(any) -> fn(any)
 function nanotick () {
   var callbacks = []
@@ -36,12 +43,13 @@ function nanotick () {
     if (interval) return callbacks.push(cb)
 
     interval = true
-    process.setTimeout(function () {
+    delayed(function () {
       var length = callbacks.length
       for (var i = 0; i < length; i++) {
         callbacks[i]()
       }
       interval = false
-    }, 0)
+    })
   }
 }
+
