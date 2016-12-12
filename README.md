@@ -19,7 +19,12 @@ myFunc()
 ```
 
 ## API
-### nanotick
+### tick = nanotick
+Create a new nanotick instance
+
+### tick(cb)
+Always resolve a function asynchronously. Uses batching under the hood to
+optimize performance
 
 ## Installation
 ```sh
