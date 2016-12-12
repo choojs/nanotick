@@ -31,6 +31,10 @@ optimize performance
 $ npm install nanotick
 ```
 
+## See Also
+- [yoshuawuyts/nanoraf](https://github.com/yoshuawuyts/nanoraf)
+- [yoshuawuyts/nanomorph](https://github.com/yoshuawuyts/nanomorph)
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
