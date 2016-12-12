@@ -13,7 +13,9 @@ function nanotick () {
 
     var isAsync = false
 
-    executeAsync(function () { isAsync = true })
+    executeAsync(function () {
+      isAsync = true
+    })
 
     return function wrappedTick () {
       var length = arguments.length
@@ -33,15 +35,17 @@ function nanotick () {
   }
 
   function executeAsync (cb) {
-    if (interval) return callbacks.push(cb)
+    callbacks.push(cb)
 
-    interval = true
-    process.setTimeout(function () {
-      var length = callbacks.length
-      for (var i = 0; i < length; i++) {
-        callbacks[i]()
-      }
-      interval = false
-    }, 0)
+    if (!interval) {
+      interval = true
+      setTimeout(function () {
+        var length = callbacks.length
+        for (var i = 0; i < length; i++) {
+          callbacks[i]()
+        }
+        interval = false
+      }, 0)
+    }
   }
 }
