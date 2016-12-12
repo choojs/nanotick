@@ -12,8 +12,8 @@ test('nanotick', function (t) {
     t.plan(1)
 
     var oops = false
-    nextTick(function () {
-      nextTick(function () {
+    process.nextTick(function () {
+      process.nextTick(function () {
         oops = true
       })
     })
@@ -23,12 +23,24 @@ test('nanotick', function (t) {
       t.equal(oops, false)
     })
 
-    nextTick(function () {
-      fn()
+    process.nextTick(fn)
+  })
+
+  t.test('sync function should resolve in the next tick', function (t) {
+    t.plan(1)
+
+    var oops = false
+    process.nextTick(function () {
+      process.nextTick(function () {
+        oops = true
+      })
     })
+
+    var tick = nanotick()
+    var fn = tick(function () {
+      t.equal(oops, false)
+    })
+
+    fn()
   })
 })
-
-function nextTick (fn) {
-  setTimeout(fn, 0)
-}

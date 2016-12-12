@@ -2,10 +2,10 @@ var assert = require('assert')
 
 module.exports = nanotick
 
-var delayed = (typeof setImmediate !== 'undefined')
-  ? setImmediate
-  : (typeof process !== 'undefined' && process.nextTick)
-    ? process.nextTick
+var delay = (typeof process !== 'undefined' && process.nextTick)
+  ? process.nextTick
+  : (typeof setImmediate !== 'undefined')
+    ? setImmediate
     : setTimeout
 
 // Process.nextTick() batching ulity
@@ -45,7 +45,7 @@ function nanotick () {
 
     if (!interval) {
       interval = true
-      delayed(function () {
+      delay(function () {
         var length = callbacks.length
         for (var i = 0; i < length; i++) {
           callbacks[i]()
