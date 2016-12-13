@@ -43,4 +43,24 @@ test('nanotick', function (t) {
 
     fn()
   })
+
+  t.test('is able to push more values onto the same tick from within a tick', function (t) {
+    t.plan(2)
+
+    var changed = false
+    process.nextTick(function () {
+      process.nextTick(function () {
+        changed = true
+      })
+    })
+
+    var tick = nanotick()
+    ;(tick(function () {
+      t.equal(changed, false)
+
+      ;(tick(function () {
+        t.equal(changed, false)
+      }))()
+    }))()
+  })
 })
