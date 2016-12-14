@@ -63,4 +63,25 @@ test('nanotick', function (t) {
       }))()
     }))()
   })
+
+  t.test('scheduled functions should be cleared after their execution', function (t) {
+    t.plan(1)
+
+    var numCalls = 0
+    var tick = nanotick()
+
+    // Arrange for a function to be called on the first tick
+    tick(function () {
+      ++numCalls
+    })()
+
+    process.nextTick(function () {
+      // Arrange for another function to be called on the second tick
+      tick(function () {
+      })()
+      process.nextTick(function () {
+        t.equal(numCalls, 1, 'There should only be one call to a scheduled function')
+      })
+    })
+  })
 })
