@@ -46,8 +46,9 @@ function nanotick () {
     if (!interval) {
       interval = true
       delay(function () {
-        for (var i = 0; i < callbacks.length; i++) {
-          callbacks[i]()
+        while (callbacks.length > 0) {
+          var func = callbacks.shift()
+          func()
         }
         interval = false
       })
