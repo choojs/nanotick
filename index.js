@@ -1,12 +1,12 @@
+/* eslint-disable no-eval */
 var assert = require('assert')
 
 module.exports = nanotick
-
-var delay = (typeof process !== 'undefined' && process.nextTick)
-  ? process.nextTick
-  : (typeof setImmediate !== 'undefined')
+var delay = (typeof window !== 'undefined' && window.document)
+  ? (typeof setImmediate !== 'undefined')
     ? setImmediate
     : setTimeout
+  : eval('process.nextTick')
 
 // Process.nextTick() batching ulity
 // null -> fn(any) -> fn(any)
