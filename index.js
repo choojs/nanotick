@@ -25,10 +25,8 @@ function nanotick () {
 
     return function wrappedTick () {
       var length = arguments.length
-      var args = []
-      for (var i = 0; i < length; i++) {
-        args.push[arguments[i]]
-      }
+      var args = new Array(length)
+      for (var i = 0; i < length; i++) args[i] = arguments[i]
 
       if (isAsync) {
         cb.apply(cb, args)
